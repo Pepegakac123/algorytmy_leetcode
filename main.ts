@@ -1,8 +1,29 @@
-export function add(a: number, b: number): number {
-  return a + b;
+const nemo: string[] = ["nemo"];
+
+function findNemo(array: string[]): void {
+	for (const item of array) {
+		if (item === "nemo") {
+			// Consider removing console.log for more accurate benchmarks
+			// console.log("Found Nemo!");
+			return;
+		}
+	}
 }
 
-// Learn more at https://docs.deno.com/runtime/manual/examples/module_metadata#concepts
-if (import.meta.main) {
-  console.log("Add 2 + 3 =", add(2, 3));
+function findNemoIncludes(array: string[]): void {
+	if (array.includes("nemo")) {
+		// Consider removing console.log for more accurate benchmarks
+		// console.log("Found Nemo!");
+		return;
+	}
 }
+
+Deno.bench({
+	name: "findNemoForLoop",
+	fn: () => findNemo(nemo),
+});
+
+Deno.bench({
+	name: "findNemoIncludes",
+	fn: () => findNemoIncludes(nemo),
+});
