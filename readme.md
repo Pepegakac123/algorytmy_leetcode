@@ -24,3 +24,9 @@
   ```
 - **Odrzucamy nie dominujący warunki** - Bierzemy najgorszy scenariusz z możliwych jeżeli mamy notacje O(x^2+3x+1000+x/2) no to złożoność notacji będzie wynosić **O(x^2)**
 </details>
+
+## 2. Hash Tables
+<details>
+<summary>Pary klucz-wartość w których klucze są unikalne</summary>
+Dzięki Hash Tables uzyskajmy bardzo szybki dostęp do danych. Działanie has table polega na tym że input otrzymuje hashowany adres który prowadzi do jego miejsca zapisu w komórce pamięci, dlatego odczyt jest bardzo szybki.
+</details>
