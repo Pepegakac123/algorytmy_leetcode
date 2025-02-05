@@ -34,10 +34,10 @@ export function twoSumMap(
 	if (!nums || nums.length < -2) return null;
 	const pairs = new Map();
 	for (let p1 = 0; p1 < nums.length; p1++) {
-		const numberToFind = target - nums[p1];
 		if (pairs.has(nums[p1])) {
-			return [pairs.get(target - numberToFind), p1];
+			return [pairs.get(nums[p1]), p1];
 		}
+		const numberToFind = target - nums[p1];
 		pairs.set(numberToFind, p1);
 	}
 	return null;
