@@ -4,6 +4,7 @@
 	},
 	"imports": {
 		"@std/assert": "jsr:@std/assert",
-		"@std/testing": "jsr:@std/testing/bdd"
+		"@std/testing": "jsr:@std/testing@^1.0.9",
+		"@std/expect": "jsr:@std/expect@^1.0.13"
 	}
 }

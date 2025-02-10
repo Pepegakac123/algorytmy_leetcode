@@ -1,5 +1,5 @@
-import { describe, it } from "@std/testing";
-import { expect } from "jsr:@std/expect";
+import { describe, it } from "jsr:@std/testing/bdd";
+import { expect } from "@std/expect";
 import { betterOrder, order } from "./solution.ts";
 
 describe("Basic tests", () => {
