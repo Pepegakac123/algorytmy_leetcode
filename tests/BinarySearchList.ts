@@ -1,6 +1,6 @@
 import { describe, it } from "jsr:@std/testing/bdd";
 import { expect } from "@std/expect";
-
+import { binarySearch } from "../Search/binarySearch.ts";
 describe("Binary Search", () => {
 	it("binary search array", () => {
 		const foo = [1, 3, 4, 69, 71, 81, 90, 99, 420, 1337, 69420];
