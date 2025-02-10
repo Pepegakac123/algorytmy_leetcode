@@ -1,14 +1,21 @@
-import two_crystal_balls from "@code/TwoCrystalBalls";
+import { describe, it } from "jsr:@std/testing/bdd";
+import { expect } from "@std/expect";
+import { twoCrystalBalls } from "../Search/TwoCrystalBalls.ts";
 
-test("two crystal balls", function () {
-    let idx = Math.floor(Math.random() * 10000);
-    const data = new Array(10000).fill(false);
+describe("Two Crystal Balls Problem", () => {
+	it("should find the breaking point correctly", () => {
+		let idx = Math.floor(Math.random() * 10000);
+		const data = new Array(10000).fill(false);
 
-    for (let i = idx; i < 10000; ++i) {
-        data[i] = true;
-    }
+		// Wypełnij tablicę wartościami true od indeksu idx
+		for (let i = idx; i < 10000; ++i) {
+			data[i] = true;
+		}
 
-    expect(two_crystal_balls(data)).toEqual(idx);
-    expect(two_crystal_balls(new Array(821).fill(false))).toEqual(-1);
+		expect(twoCrystalBalls(data)).toEqual(idx);
+	});
+
+	it("should return -1 when no breaking point exists", () => {
+		expect(twoCrystalBalls(new Array(821).fill(false))).toEqual(-1);
+	});
 });
-
