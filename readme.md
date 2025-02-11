@@ -248,6 +248,7 @@ export default class Queue<T> {
 - deque (usunięcie) - O(1)
 - peek (podgląd) - O(1)
 - length (długość) - O(1)
+</details>
 
 ### 3. Stack (Stos)
 <details>
