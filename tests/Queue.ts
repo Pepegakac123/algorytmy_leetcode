@@ -1,31 +1,48 @@
-import Queue from "@code/Queue";
+import { describe, it } from "jsr:@std/testing/bdd";
+import { expect } from "@std/expect/expect";
+import Queue from "../dataStructures/Queue.ts";
 
-test("queue", function () {
-    const list = new Queue<number>();
+describe("Queue", () => {
+	it("should handle basic queue operations", () => {
+		const queue = new Queue<number>();
 
-    list.enqueue(5);
-    list.enqueue(7);
-    list.enqueue(9);
+		// Test enqueue operations
+		queue.enqueue(5);
+		queue.enqueue(7);
+		queue.enqueue(9);
 
-    expect(list.deque()).toEqual(5);
-    expect(list.length).toEqual(2);
+		// Test dequeue and length
+		expect(queue.deque()).toEqual(5);
+		expect(queue.length).toEqual(2);
 
-    // this must be wrong..?
-    debugger;
+		// Test additional enqueue and dequeue operations
+		queue.enqueue(11);
+		expect(queue.deque()).toEqual(7);
+		expect(queue.deque()).toEqual(9);
 
-    // i hate using debuggers
-    list.enqueue(11);
-    debugger;
-    expect(list.deque()).toEqual(7);
-    expect(list.deque()).toEqual(9);
-    expect(list.peek()).toEqual(11);
-    expect(list.deque()).toEqual(11);
-    expect(list.deque()).toEqual(undefined);
-    expect(list.length).toEqual(0);
+		// Test peek operation
+		expect(queue.peek()).toEqual(11);
 
-    // just wanted to make sure that I could not blow up myself when i remove
-    // everything
-    list.enqueue(69);
-    expect(list.peek()).toEqual(69);
-    expect(list.length).toEqual(1);
+		// Test dequeue until empty
+		expect(queue.deque()).toEqual(11);
+		expect(queue.deque()).toEqual(undefined);
+		expect(queue.length).toEqual(0);
+	});
+
+	it("should handle operations after emptying queue", () => {
+		const queue = new Queue<number>();
+
+		// Test enqueue after empty
+		queue.enqueue(69);
+		expect(queue.peek()).toEqual(69);
+		expect(queue.length).toEqual(1);
+	});
+
+	it("should handle empty queue operations", () => {
+		const queue = new Queue<number>();
+
+		expect(queue.deque()).toEqual(undefined);
+		expect(queue.peek()).toEqual(undefined);
+		expect(queue.length).toEqual(0);
+	});
 });
