@@ -360,4 +360,68 @@ Kiedy chcemy odczytywać pierwszy,ostatni, losowy element, wykorzystamy raczej `
 ### Rekurencja
 <details>
 <summary>Jest to funkcja która wywołuje samą siebie dopóki dany problem nie zostanie rozwiązany(base case)</summary>
+# Rekurencja - Komponenty i Etapy
+
+##### 1. Przypadek bazowy (Base Case)
+- Warunek końcowy, który przerywa rekurencyjne wywołania
+- Rozwiązuje problem bezpośrednio, bez dalszych wywołań rekurencyjnych
+- Zapobiega nieskończonej rekurencji
+- Przykłady:
+  - Dotarcie do końca labiryntu
+  - Osiągnięcie krawędzi tablicy
+  - Osiągnięcie określonej głębokości rekurencji
+
+##### 2. Przypadek rekurencyjny (Recursive Case)
+- Wywołanie tej samej funkcji z innymi parametrami
+- Przekształca oryginalny problem na mniejszy podproblem
+- Zbliża rozwiązanie do przypadku bazowego
+- Przykłady:
+  - Przejście do sąsiedniego pola w labiryncie
+  - Sprawdzenie kolejnego elementu w tablicy
+  - Przetwarzanie mniejszego fragmentu danych
+
+#### Etapy wykonania rekurencji
+
+##### 1. Pre-rekurencja (Pre-recursion)
+- Kod wykonywany przed wywołaniem rekurencyjnym
+- Przygotowuje dane i warunki dla wywołania rekurencyjnego
+- Przykłady:
+  - Oznaczenie pola jako odwiedzone
+  - Dodanie elementu do ścieżki
+  - Inicjalizacja zmiennych pomocniczych
+
+##### 2. Wywołanie rekurencyjne (Recursive call)
+- Właściwe wywołanie funkcji z nowymi parametrami
+- Przekazuje zmodyfikowany problem do kolejnego wywołania
+
+##### 3. Post-rekurencja (Post-recursion)
+- Kod wykonywany po powrocie z wywołania rekurencyjnego
+- Przetwarza wyniki z wywołania rekurencyjnego
+- Przykłady:
+  - Cofnięcie zmian (backtracking) jeśli rekurencja nie powiodła się
+  - Łączenie wyników z wielu wywołań rekurencyjnych
+  - Czyszczenie lub resetowanie stanu
+
+#### Przykład: Przeszukiwanie labiryntu
+```typescript
+function walk(maze, curr, end, seen, path) {
+  // Base Case: warunki końcowe
+  if (curr === end) return true;
+  if (outOfBounds(curr) || isWall(curr) || seen[curr]) return false;
+  
+  // Pre-rekurencja
+  seen[curr] = true;
+  path.push(curr);
+  
+  // Wywołania rekurencyjne
+  for (const dir of directions) {
+    const next = move(curr, dir);
+    if (walk(maze, next, end, seen, path)) return true;
+  }
+  
+  // Post-rekurencja (backtracking)
+  path.pop();
+  return false;
+}
+```
 </details>
