@@ -356,3 +356,8 @@ Kiedy chcemy odczytywać pierwszy,ostatni, losowy element, wykorzystamy raczej `
 
 
 </details>
+
+### Rekurencja
+<details>
+<summary>Jest to funkcja która wywołuje samą siebie dopóki dany problem nie zostanie rozwiązany(base case)</summary>
+</details>
