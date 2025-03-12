@@ -53,8 +53,8 @@ export default class DoublyLinkedList<T> {
 		node.prev = curr.prev;
 		curr.prev = node;
 
-		if (curr.prev) {
-			curr.prev.next = node;
+		if (node.prev) {
+			node.prev.next = node;
 		}
 	}
 	append(item: T): void {
