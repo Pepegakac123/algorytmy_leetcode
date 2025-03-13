@@ -507,3 +507,251 @@ function walk(maze, curr, end, seen, path) {
 }
 ```
 </details>
+
+### Binary Tree (Drzewo Binarne)
+<details>
+<summary>Hierarchiczna struktura danych, w której każdy węzeł może mieć maksymalnie dwóch potomków</summary>
+
+#### Opis
+Drzewo binarne to nieliniowa struktura danych, gdzie każdy węzeł może mieć co najwyżej dwóch potomków, zazwyczaj nazywanych lewym i prawym dzieckiem. Węzeł bez potomków nazywany jest liściem.
+
+#### Typy Drzew Binarnych
+1. **Pełne Drzewo Binarne (Full Binary Tree)**
+   - Każdy węzeł ma 0 lub 2 potomków (nie ma węzłów z tylko jednym dzieckiem)
+   
+2. **Kompletne Drzewo Binarne (Complete Binary Tree)**
+   - Wszystkie poziomy, z wyjątkiem ostatniego, są całkowicie wypełnione
+   - Wszystkie węzły na ostatnim poziomie są ułożone jak najbardziej na lewo
+   
+3. **Idealne Drzewo Binarne (Perfect Binary Tree)**
+   - Wszystkie węzły wewnętrzne mają dokładnie dwóch potomków
+   - Wszystkie liście są na tym samym poziomie
+   
+4. **Zrównoważone Drzewo Binarne (Balanced Binary Tree)**
+   - Różnica wysokości między lewym i prawym poddrzewem każdego węzła jest nie większa niż 1
+   
+5. **Drzewo Binarne Poszukiwań (Binary Search Tree)**
+   - Dla każdego węzła wszystkie elementy w lewym poddrzewie są mniejsze
+   - Dla każdego węzła wszystkie elementy w prawym poddrzewie są większe
+
+#### Przykład Implementacji
+```typescript
+export type BinaryNode<T> = {
+    value: T;
+    left?: BinaryNode<T> | null;
+    right?: BinaryNode<T> | null;
+};
+
+// Przykładowa implementacja drzewa
+const tree: BinaryNode<number> = {
+    value: 20,
+    left: {
+        value: 10,
+        left: {
+            value: 5,
+            right: {
+                value: 7
+            }
+        },
+        right: {
+            value: 15
+        }
+    },
+    right: {
+        value: 50,
+        left: {
+            value: 30,
+            left: {
+                value: 29
+            },
+            right: {
+                value: 45
+            }
+        },
+        right: {
+            value: 100
+        }
+    }
+};
+```
+
+#### Zastosowania
+- Indeksy baz danych (B-drzewa)
+- Kodowanie Huffmana
+- Systemy plików
+- Algorytmy wyszukiwania
+- Struktura DOM w przeglądarkach
+</details>
+
+### Tree Traversal (Przechodzenie Drzewa)
+<details>
+<summary>Metody systematycznego odwiedzania wszystkich węzłów drzewa</summary>
+
+#### Opis
+Przechodzenie drzewa to proces odwiedzania (przetwarzania) każdego węzła w drzewie dokładnie jeden raz. Istnieją różne algorytmy przechodzenia, które różnią się kolejnością odwiedzania węzłów.
+
+### Przechodzenie w Głąb (Depth-First Traversal)
+
+#### Pre-order (Preorder Traversal)
+<details>
+<summary>Odwiedzanie węzła przed odwiedzeniem jego dzieci</summary>
+
+##### Algorytm
+1. Odwiedź bieżący węzeł (ROOT)
+2. Przetwórz lewe poddrzewo (LEFT)
+3. Przetwórz prawe poddrzewo (RIGHT)
+
+##### Implementacja
+```typescript
+function preOrder<T>(node: BinaryNode<T> | null, path: T[] = []): T[] {
+    if (!node) {
+        return path;
+    }
+    // ROOT
+    path.push(node.value);
+    // LEFT
+    preOrder(node.left ?? null, path);
+    // RIGHT
+    preOrder(node.right ?? null, path);
+    
+    return path;
+}
+```
+
+##### Wizualizacja
+Dla przykładowego drzewa:
+```
+        20
+       /  \
+     10    50
+    / \    / \
+   5  15  30 100
+    \    / \
+     7  29 45
+```
+
+Kolejność odwiedzania: **20, 10, 5, 7, 15, 50, 30, 29, 45, 100**
+
+![Pre-order Traversal](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Traversal_pre-order.gif/220px-Traversal_pre-order.gif)
+
+##### Zastosowania
+- Tworzenie kopii drzewa
+- Wyrażenia prefiksowe (przedrostkowe)
+- Wyświetlanie struktury katalogów
+</details>
+
+#### In-order (Inorder Traversal)
+<details>
+<summary>Odwiedzanie węzła pomiędzy odwiedzeniem lewego i prawego dziecka</summary>
+
+##### Algorytm
+1. Przetwórz lewe poddrzewo (LEFT)
+2. Odwiedź bieżący węzeł (ROOT)
+3. Przetwórz prawe poddrzewo (RIGHT)
+
+##### Implementacja
+```typescript
+function inOrder<T>(node: BinaryNode<T> | null, path: T[] = []): T[] {
+    if (!node) {
+        return path;
+    }
+    // LEFT
+    inOrder(node.left ?? null, path);
+    // ROOT
+    path.push(node.value);
+    // RIGHT
+    inOrder(node.right ?? null, path);
+    
+    return path;
+}
+```
+
+##### Wizualizacja
+Dla przykładowego drzewa:
+```
+        20
+       /  \
+     10    50
+    / \    / \
+   5  15  30 100
+    \    / \
+     7  29 45
+```
+
+Kolejność odwiedzania: **5, 7, 10, 15, 20, 29, 30, 45, 50, 100**
+
+![In-order Traversal](https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Traversal_in-order.gif/220px-Traversal_in-order.gif)
+
+##### Zastosowania
+- W drzewie BST daje węzły w porządku rosnącym
+- Ewaluacja wyrażeń matematycznych
+- Sortowanie danych
+</details>
+
+#### Post-order (Postorder Traversal)
+<details>
+<summary>Odwiedzanie węzła po odwiedzeniu jego dzieci</summary>
+
+##### Algorytm
+1. Przetwórz lewe poddrzewo (LEFT)
+2. Przetwórz prawe poddrzewo (RIGHT)
+3. Odwiedź bieżący węzeł (ROOT)
+
+##### Implementacja
+```typescript
+function postOrder<T>(node: BinaryNode<T> | null, path: T[] = []): T[] {
+    if (!node) {
+        return path;
+    }
+    // LEFT
+    postOrder(node.left ?? null, path);
+    // RIGHT
+    postOrder(node.right ?? null, path);
+    // ROOT
+    path.push(node.value);
+    
+    return path;
+}
+```
+
+##### Wizualizacja
+Dla przykładowego drzewa:
+```
+        20
+       /  \
+     10    50
+    / \    / \
+   5  15  30 100
+    \    / \
+     7  29 45
+```
+
+Kolejność odwiedzania: **7, 5, 15, 10, 29, 45, 30, 100, 50, 20**
+
+![Post-order Traversal](https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Traversal_post-order.gif/220px-Traversal_post-order.gif)
+
+##### Zastosowania
+- Usuwanie drzewa (każdy węzeł jest usuwany po jego dzieciach)
+- Wyrażenia postfiksowe (przyrostkowe)
+- Obliczanie rozmiaru katalogów
+</details>
+
+### Porównanie Metod Przechodzenia
+| Metoda | Kolejność | Zastosowania |
+|--------|-----------|--------------|
+| Pre-order | ROOT, LEFT, RIGHT | Kopiowanie drzewa, wyrażenia prefiksowe |
+| In-order | LEFT, ROOT, RIGHT | Sortowanie BST, wyrażenia infiksowe |
+| Post-order | LEFT, RIGHT, ROOT | Usuwanie drzewa, wyrażenia postfiksowe |
+
+### Wizualizacja Wszystkich Metod
+<details>
+<summary>Porównanie wizualne wszystkich metod przechodzenia</summary>
+
+![Wszystkie metody](https://cdn.programiz.com/sites/tutorial2program/files/tree-traversal.png)
+
+Kolejność odwiedzania dla różnych metod:
+- **Pre-order**: F, B, A, D, C, E, G, I, H
+- **In-order**: A, B, C, D, E, F, G, H, I
+- **Post-order**: A, C, E, D, B, H, I, G, F
+</details>
+</details>
