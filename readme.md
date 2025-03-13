@@ -436,10 +436,11 @@ Kiedy chcemy odczytywać pierwszy,ostatni, losowy element, wykorzystamy raczej `
 
 </details>
 
-### Rekurencja
+### 5.Rekurencja
 <details>
 <summary>Jest to funkcja która wywołuje samą siebie dopóki dany problem nie zostanie rozwiązany(base case)</summary>
-# Rekurencja - Komponenty i Etapy
+
+## Rekurencja - Komponenty i Etapy
 
 ##### 1. Przypadek bazowy (Base Case)
 - Warunek końcowy, który przerywa rekurencyjne wywołania
@@ -578,7 +579,6 @@ const tree: BinaryNode<number> = {
 - Systemy plików
 - Algorytmy wyszukiwania
 - Struktura DOM w przeglądarkach
-</details>
 
 ### Tree Traversal (Przechodzenie Drzewa)
 <details>
@@ -751,4 +751,5 @@ Kolejność odwiedzania dla różnych metod:
 - **In-order**: A, B, C, D, E, F, G, H, I
 - **Post-order**: A, C, E, D, B, H, I, G, F
 
+</details>
 </details>
