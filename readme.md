@@ -507,6 +507,7 @@ function walk(maze, curr, end, seen, path) {
 }
 ```
 </details>
+</details>
 
 ### Binary Tree (Drzewo Binarne)
 <details>
@@ -753,5 +754,5 @@ Kolejność odwiedzania dla różnych metod:
 - **Pre-order**: F, B, A, D, C, E, G, I, H
 - **In-order**: A, B, C, D, E, F, G, H, I
 - **Post-order**: A, C, E, D, B, H, I, G, F
-</details>
+
 </details>
