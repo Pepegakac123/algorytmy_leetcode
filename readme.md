@@ -393,6 +393,7 @@ export default class Stack<T> {
 - pop (usunięcie) - O(1)
 - peek (podgląd) - O(1)
 - length (długość) - O(1)
+</details>
 
 ### 4. Linked List (Lista Powiązana)
 <details>
@@ -428,11 +429,7 @@ Wady:
 - Dodatkowa pamięć na wskaźniki
 - Trudniejsze w implementacji niż tablice
 
-</details>
-
-### 3. Array List vs Linked List 
-<details>
-<summary>Wykorzystanie jednej z tych struktur zależy głównie od  funkcjonalności którą wykonujemy</summary>
+##### Array List vs Linked List 
 
 Kiedy chcemy odczytywać pierwszy,ostatni, losowy element, wykorzystamy raczej `Array List`, gdyż zapewnia nam to odczyt O(1). Natomiast jeżeli chcemy wstawiać lub usuwać wartość skorzystamy z `Linked List `, gdyż wtedy nie będziemy musieli przestawiać elementów n-razy i będzie to znacznie wydajniejsze niż zwykła tablica. 
 
@@ -506,7 +503,6 @@ function walk(maze, curr, end, seen, path) {
   return false;
 }
 ```
-</details>
 </details>
 
 ### Binary Tree (Drzewo Binarne)
