@@ -1,4 +1,4 @@
-import { bfs } from "../path/to/BTBFS.ts";
+import bfs from "../Search/bfsearch.ts";
 import { tree } from "./tree.ts";
 import { describe, it } from "jsr:@std/testing/bdd";
 import { expect } from "jsr:@std/expect";
