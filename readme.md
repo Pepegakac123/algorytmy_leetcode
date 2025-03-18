@@ -752,4 +752,71 @@ Kolejność odwiedzania dla różnych metod:
 - **Post-order**: A, C, E, D, B, H, I, G, F
 
 </details>
+
+### Depth First Search (Przeszukiwanie w Głąb)
+<details>
+<summary>Problem przeszukiwania drzewa binarnego w głąb</summary>
+
+#### Opis Problemu
+Mając drzewo binarne, znajdź czy określona wartość występuje w drzewie, używając przeszukiwania w głąb.
+
+#### Przykład z Życia
+Przeszukiwanie labiryntu idąc tak daleko, jak to możliwe jedną ścieżką, zanim cofniemy się i spróbujemy innej drogi.
+
+#### Implementacja Search
+```typescript
+import type { BinaryNode } from "../types/index.ts";
+
+function search(curr: BinaryNode<number> | null, needle: number): boolean {
+	//base case
+	if (!curr) return false;
+
+	if (curr.value === needle) return true;
+
+	if (curr.value < needle) {
+		return search(curr.right, needle);
+	}
+	return search(curr.left, needle);
+}
+
+export default function dfs(head: BinaryNode<number>, needle: number): boolean {
+	return search(head, needle);
+}
+```
+
+#### Wyjaśnienie
+1. Algorytm używa rekurencji do przeszukiwania drzewa:
+   - Sprawdza czy bieżący węzeł jest null (przypadek bazowy) - jeśli tak, zwraca false
+   - Sprawdza czy wartość bieżącego węzła to poszukiwana wartość - jeśli tak, zwraca true
+   - Jeśli szukana wartość jest większa od wartości bieżącego węzła, szuka w prawym poddrzewie
+   - W przeciwnym razie szuka w lewym poddrzewie
+2. Złożoność O(h), gdzie h to wysokość drzewa (w najgorszym przypadku O(n) dla drzewa zdegenerowanego)
+
+#### Operacje Depth First Search
+- **Search** - Pokazany powyżej
+- **Delete** - Usuwanie węzła z drzewa:
+  - Jest jedną z bardziej skomplikowanych operacji na drzewie BST
+  - Wymaga odnalezienia węzła do usunięcia za pomocą DFS
+  - Istnieją trzy przypadki usuwania:
+    1. Usuwanie liścia (węzła bez dzieci) - po prostu usuwamy węzeł
+    2. Usuwanie węzła z jednym dzieckiem - zastępujemy węzeł jego dzieckiem
+    3. Usuwanie węzła z dwojgiem dzieci - znajdujemy następnika (najmniejszy węzeł w prawym poddrzewie lub największy w lewym) i zastępujemy usuwany węzeł tym następnikiem
+  - Po każdym usunięciu może być konieczne zrównoważenie drzewa
+  
+- **Insertion** - Dodawanie nowego węzła do drzewa:
+  - Wykorzystuje DFS do znalezienia właściwego miejsca dla nowego węzła
+  - Postępujemy rekurencyjnie od korzenia:
+    1. Jeśli drzewo jest puste, nowy węzeł staje się korzeniem
+    2. Jeśli wartość do wstawienia jest mniejsza od wartości bieżącego węzła, rekurencyjnie wstawiamy do lewego poddrzewa
+    3. Jeśli wartość do wstawienia jest większa od wartości bieżącego węzła, rekurencyjnie wstawiamy do prawego poddrzewa
+    4. Jeśli wartość już istnieje w drzewie, zazwyczaj albo ignorujemy (brak duplikatów), albo aktualizujemy istniejący węzeł
+  - Złożoność O(h), gdzie h to wysokość drzewa
+  - Po wstawieniu może być konieczne zrównoważenie drzewa w przypadku drzew samobalansujących (AVL, Red-Black)
+
+#### Zastosowania
+- Wyszukiwanie elementów w drzewie binarnym
+- Tworzenie i modyfikacja drzewa binarnego poszukiwań (BST)
+- Rozwiązywanie labiryntów i problemów z użyciem backtrackingu
+- Efektywne utrzymywanie posortowanych danych z szybkim dostępem
+</details>
 </details>
