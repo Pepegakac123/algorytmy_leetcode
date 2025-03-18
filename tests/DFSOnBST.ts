@@ -1,13 +1,10 @@
-import dfs from "@code/DFSOnBST";
-import { tree } from "./tree";
+import { tree } from "./tree.ts";
+import { describe, it } from "jsr:@std/testing/bdd";
+import { expect } from "jsr:@std/expect";
+import dfs from "../dataStructures/depthFirstSearch.ts";
 
-test("DFS on BST", function () {
-    expect(dfs(tree, 45)).toEqual(true);
-    expect(dfs(tree, 7)).toEqual(true);
-    expect(dfs(tree, 69)).toEqual(false);
+describe("DFS on BST", () => {
+	expect(dfs(tree, 45)).toEqual(true);
+	expect(dfs(tree, 7)).toEqual(true);
+	expect(dfs(tree, 69)).toEqual(false);
 });
-
-
-
-
-
