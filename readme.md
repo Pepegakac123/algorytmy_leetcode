@@ -752,7 +752,7 @@ Kolejność odwiedzania dla różnych metod:
 - **Post-order**: A, C, E, D, B, H, I, G, F
 
 </details>
-
+</details>
 ### Depth First Search (Przeszukiwanie w Głąb)
 <details>
 <summary>Problem przeszukiwania drzewa binarnego w głąb</summary>
@@ -818,5 +818,4 @@ export default function dfs(head: BinaryNode<number>, needle: number): boolean {
 - Tworzenie i modyfikacja drzewa binarnego poszukiwań (BST)
 - Rozwiązywanie labiryntów i problemów z użyciem backtrackingu
 - Efektywne utrzymywanie posortowanych danych z szybkim dostępem
-</details>
 </details>
