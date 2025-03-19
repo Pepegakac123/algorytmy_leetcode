@@ -506,7 +506,7 @@ function walk(maze, curr, end, seen, path) {
 ```
 </details>
 
-### Binary Tree (Drzewo Binarne)
+### 6. Binary Tree (Drzewo Binarne)
 <details>
 <summary>Hierarchiczna struktura danych, w której każdy węzeł może mieć maksymalnie dwóch potomków</summary>
 
@@ -822,3 +822,294 @@ export default function dfs(head: BinaryNode<number>, needle: number): boolean {
 </details>
 </details>
 
+### 7. Heap (Kopiec)
+<details>
+<summary>Specjalna struktura drzewa binarnego, która spełnia właściwość kopca - klucz każdego węzła jest większy (lub mniejszy) niż klucze jego dzieci</summary>
+
+#### Opis
+Kopiec to kompletne drzewo binarne, które spełnia właściwość kopca. Istnieją dwa rodzaje kopców:
+- **Min-Heap** - wartość rodzica jest mniejsza lub równa wartościom jego dzieci
+- **Max-Heap** - wartość rodzica jest większa lub równa wartościom jego dzieci
+
+Kopiec jest najczęściej implementowany jako tablica, co pozwala na efektywne obliczanie pozycji dzieci i rodzica każdego węzła bez konieczności przechowywania wskaźników.
+
+#### Przykład z Życia
+System kolejkowania zadań według priorytetów - zadania o najwyższym priorytecie są wykonywane pierwsze.
+
+#### Wizualizacja Min-Heap
+```
+       1
+     /   \
+    3     2
+   / \   / \
+  6   5 4   8
+```
+
+Ten sam kopiec reprezentowany jako tablica: `[1, 3, 2, 6, 5, 4, 8]`
+
+#### Moje Rozwiązanie
+```typescript
+export default class MinHeap {
+    public length: number;
+    private data: number[];
+    
+    constructor() {
+        this.data = [];
+        this.length = 0;
+    }
+
+    insert(value: number): void {
+        // Dodajemy nową wartość na koniec tablicy
+        this.data[this.length] = value;
+        // Przywracamy właściwość kopca "do góry"
+        this.heapifyUp(this.length);
+        this.length++;
+    }
+
+    delete(): number {
+        if (this.length === 0) {
+            return -1;
+        }
+        
+        this.length--;
+        // Zapisujemy wartość korzenia (najmniejszą)
+        const out = this.data[0];
+        
+        if (this.length === 0) {
+            this.data = [];
+            return out;
+        }
+        
+        // Przenosimy ostatni element na szczyt kopca
+        this.data[0] = this.data[this.length];
+        // Przywracamy właściwość kopca "w dół"
+        this.heapifyDown(0);
+        return out;
+    }
+
+    private heapifyDown(idx: number): void {
+        const lIdx = this.leftChild(idx);
+        const rIdx = this.rightChild(idx);
+        
+        // Sprawdzenie, czy indeksy są poprawne
+        if (idx >= this.length || lIdx >= this.length || rIdx >= this.length)
+            return;
+            
+        const lValue = this.data[lIdx];
+        const rValue = this.data[rIdx];
+        const value = this.data[idx];
+
+        // Jeśli prawe dziecko jest mniejsze niż lewe i wartość węzła
+        if (lValue > rValue && value > rValue) {
+            this.data[idx] = rValue;
+            this.data[rIdx] = value;
+            this.heapifyDown(rIdx);
+        } 
+        // Jeśli lewe dziecko jest mniejsze niż prawe i wartość węzła
+        else if (rValue > lValue && value > lValue) {
+            this.data[idx] = lValue;
+            this.data[lIdx] = value;
+            this.heapifyDown(lIdx);
+        }
+    }
+
+    private heapifyUp(idx: number): void {
+        if (idx === 0) return;
+
+        const parent = this.parent(idx);
+        const parentValue = this.data[parent];
+        const value = this.data[idx];
+
+        // Jeśli wartość rodzica jest większa niż wartość bieżącego węzła
+        if (parentValue > value) {
+            // Zamieniamy wartości
+            this.data[idx] = parentValue;
+            this.data[parent] = value;
+            // Kontynuujemy proces w górę drzewa
+            this.heapifyUp(parent);
+        }
+    }
+
+    // Pomocnicze metody do obliczania indeksów rodzica i dzieci
+    private parent(idx: number): number {
+        return Math.floor((idx - 1) / 2);
+    }
+
+    private leftChild(idx: number): number {
+        return idx * 2 + 1;
+    }
+    
+    private rightChild(idx: number): number {
+        return idx * 2 + 2;
+    }
+}
+```
+
+#### Wyjaśnienie
+1. **Implementacja tablicowa**: Kopiec jest implementowany jako tablica, gdzie:
+   - Rodzic węzła o indeksie `i` znajduje się na pozycji `Math.floor((i-1)/2)`
+   - Lewe dziecko węzła o indeksie `i` znajduje się na pozycji `2*i + 1`
+   - Prawe dziecko węzła o indeksie `i` znajduje się na pozycji `2*i + 2`
+
+2. **Operacje**:
+   - **insert**: Dodaje nowy element na koniec tablicy i przywraca właściwość kopca metodą "heapifyUp"
+   - **delete**: Usuwa korzeń (najmniejszy element), przenosi ostatni element na miejsce korzenia i przywraca właściwość kopca metodą "heapifyDown"
+   - **heapifyUp**: Porównuje węzeł z jego rodzicem i zamienia, jeśli jest mniejszy, kontynuując proces rekurencyjnie
+   - **heapifyDown**: Porównuje węzeł z jego dziećmi i zamienia z mniejszym dzieckiem, jeśli jest większy, kontynuując proces rekurencyjnie
+
+3. **Zastosowania**:
+   - Kolejki priorytetowe - dostęp do elementu o najwyższym/najniższym priorytecie w czasie O(1)
+   - Sortowanie przez kopcowanie (Heap Sort) - algorytm sortowania o złożoności O(n log n)
+   - Algorytm Dijkstry - znajdowanie najkrótszej ścieżki w grafie
+
+#### Operacje i Złożoność
+- insert (dodanie) - O(log n)
+- delete (usunięcie korzenia) - O(log n)
+- peek (podgląd korzenia) - O(1)
+- heapify (budowanie kopca) - O(n)
+
+#### Cechy
+- Złożoność czasowa: Większość operacji O(log n)
+- Złożoność pamięciowa: O(n)
+- Struktura częściowo uporządkowana
+- Implementowana jako kompletne drzewo binarne
+- Efektywna implementacja kolejki priorytetowej
+
+#### Heap Sort
+Kopiec może być wykorzystany do sortowania tablicy:
+1. Budujemy kopiec z tablicy - O(n)
+2. Usuwamy korzeń (największy/najmniejszy element) i umieszczamy go na końcu posortowanej części tablicy - O(log n)
+3. Powtarzamy krok 2 dla wszystkich elementów - O(n log n)
+
+Całkowita złożoność czasowa: O(n log n)
+</details>
+
+### 8. Trie (Drzewo Prefiksowe)
+<details>
+<summary>Specjalna struktura drzewa wykorzystywana do przechowywania i wyszukiwania ciągów znaków, gdzie każda ścieżka od korzenia do liścia reprezentuje słowo</summary>
+
+#### Opis
+Trie (wymawiane jako "try" lub "tree") to drzewo prefiksowe, które jest efektywną strukturą do przechowywania i wyszukiwania ciągów znaków, szczególnie przydatną dla słowników i operacji wyszukiwania prefiksowego. Każdy węzeł reprezentuje pojedynczy znak, a ścieżka od korzenia do węzła oznaczonego jako końcowy reprezentuje słowo.
+
+#### Przykład z Życia
+Funkcja autouzupełniania w wyszukiwarkach lub telefonie komórkowym, która sugeruje słowa na podstawie wpisanych znaków.
+
+#### Wizualizacja Trie
+Poniżej znajduje się wizualizacja trie dla słów: "cat", "car", "card", "cart", "dog":
+
+```
+       (root)
+       /    \
+      c      d
+     /        \
+    a         o
+   / \         \
+  t   r         g*
+ *    / \
+     d   t
+     *   *
+```
+
+Gwiazdki oznaczają węzły końcowe słów.
+
+#### Implementacja
+```typescript
+type TrieNode = {
+    char: string;
+    children: Map<string, TrieNode>;
+    isEnd: boolean;
+};
+
+export default class Trie {
+    private root: TrieNode;
+
+    constructor() {
+        this.root = { char: '', children: new Map(), isEnd: false };
+    }
+
+    insert(word: string): void {
+        let current = this.root;
+
+        for (const char of word) {
+            if (!current.children.has(char)) {
+                current.children.set(char, {
+                    char,
+                    children: new Map(),
+                    isEnd: false
+                });
+            }
+            current = current.children.get(char)!;
+        }
+        
+        current.isEnd = true;
+    }
+
+    search(word: string): boolean {
+        const node = this.getNode(word);
+        return !!node && node.isEnd;
+    }
+
+    startsWith(prefix: string): boolean {
+        return !!this.getNode(prefix);
+    }
+
+    private getNode(string: string): TrieNode | null {
+        let current = this.root;
+
+        for (const char of string) {
+            if (!current.children.has(char)) {
+                return null;
+            }
+            current = current.children.get(char)!;
+        }
+        
+        return current;
+    }
+    
+    // Dodatkowa metoda do zbierania wszystkich słów z określonym prefiksem
+    collectWords(prefix: string): string[] {
+        const node = this.getNode(prefix);
+        if (!node) return [];
+        
+        const results: string[] = [];
+        this.collectWordsRecursive(node, prefix, results);
+        return results;
+    }
+    
+    private collectWordsRecursive(node: TrieNode, prefix: string, results: string[]): void {
+        if (node.isEnd) {
+            results.push(prefix);
+        }
+        
+        for (const [char, childNode] of node.children) {
+            this.collectWordsRecursive(childNode, prefix + char, results);
+        }
+    }
+}
+```
+
+#### Wyjaśnienie
+1. **Struktura węzła**:
+   - `char`: znak reprezentowany przez węzeł
+   - `children`: mapa zawierająca dzieci węzła (następne znaki)
+   - `isEnd`: flaga wskazująca, czy węzeł jest końcem słowa
+
+2. **Operacje**:
+   - **insert**: Dodaje nowe słowo do drzewa, tworząc nowe węzły dla każdego znaku, jeśli nie istnieją
+   - **search**: Sprawdza, czy dokładnie takie słowo istnieje w drzewie
+   - **startsWith**: Sprawdza, czy istnieje jakiekolwiek słowo zaczynające się od danego prefiksu
+   - **collectWords**: Zbiera wszystkie słowa z określonym prefiksem
+
+3. **Zastosowania**:
+   - Autouzupełnianie i sugestie słów
+   - Sprawdzanie pisowni
+   - Słowniki i wyszukiwanie prefiksowe
+   - Filtrowanie i klasyfikacja tekstów
+   - Kompresja danych (w niektórych algorytmach)
+
+#### Operacje i Złożoność
+- insert (dodanie słowa) - O(m), gdzie m to długość słowa
+- search (wyszukanie słowa) - O(m)
+- startsWith (sprawdzenie prefiksu) - O(m)
+- delete (usunięcie słowa) -
+</details>
